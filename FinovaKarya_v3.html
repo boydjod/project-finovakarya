@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FinovaKarya — Marketplace Jasa Mahasiswa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07090F;
+  --bg2: #0D1120;
+  --bg3: #131929;
+  --surface: #161E2E;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.13);
+  --text: #E8EDF8;
+  --text2: #8B96B0;
+  --text3: #5A6478;
+  --accent: #6C63FF;
+  --accent2: #8B84FF;
+  --accent-glow: rgba(108,99,255,0.25);
+  --teal: #00D4AA;
+  --teal-glow: rgba(0,212,170,0.2);
+  --gold: #FFB547;
+  --danger: #FF5F7E;
+  --white: #ffffff;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 7px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--surface);border-radius:3px;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 max(20px,4vw);
+  background:rgba(7,9,15,0.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background 0.3s;
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.35rem;
+  color:var(--text);text-decoration:none;
+  letter-spacing:-0.02em;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--teal));
+  box-shadow:0 0 10px var(--accent-glow);
+}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{
+  font-size:0.85rem;font-weight:500;
+  color:var(--text2);text-decoration:none;
+  padding:7px 14px;border-radius:var(--radius-xs);
+  transition:all 0.15s;
+}
+.nav-links a:hover{background:var(--surface);color:var(--text);}
+.nav-btn{
+  background:linear-gradient(135deg,var(--accent),#5B52E5)!important;
+  color:var(--white)!important;
+  padding:8px 20px!important;
+  border-radius:100px!important;
+  box-shadow:0 4px 20px var(--accent-glow);
+  font-weight:600!important;
+}
+.nav-btn:hover{opacity:0.88;background:linear-gradient(135deg,var(--accent),#5B52E5)!important;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text2);margin:4px 0;border-radius:2px;transition:all 0.2s;}
+
+/* MOBILE NAV */
+.mobile-nav{
+  display:none;position:fixed;top:68px;left:0;right:0;z-index:199;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:16px max(20px,4vw);
+  flex-direction:column;gap:4px;
+}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{
+  color:var(--text2);text-decoration:none;font-weight:500;
+  padding:10px 14px;border-radius:var(--radius-xs);
+  transition:all 0.15s;
+}
+.mobile-nav a:hover{background:var(--surface);color:var(--text);}
+.mobile-nav .nav-btn{
+  background:linear-gradient(135deg,var(--accent),#5B52E5)!important;
+  color:var(--white)!important;margin-top:4px;text-align:center;
+}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:120px max(20px,5vw) 80px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(108,99,255,0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 80% 40%, rgba(0,212,170,0.08) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);
+  pointer-events:none;opacity:0.4;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(108,99,255,0.12);
+  border:1px solid rgba(108,99,255,0.3);
+  color:var(--accent2);
+  font-size:0.78rem;font-weight:600;
+  padding:7px 18px;border-radius:100px;
+  margin-bottom:28px;position:relative;z-index:1;
+  animation:fadeUp 0.6s ease both;
+}
+.hero-badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 8px var(--teal);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:clamp(2.6rem,6.5vw,5rem);
+  line-height:1.05;letter-spacing:-0.03em;
+  color:var(--white);
+  max-width:800px;margin-bottom:20px;
+  position:relative;z-index:1;
+  animation:fadeUp 0.6s 0.1s ease both;
+}
+.hero h1 .gradient-text{
+  background:linear-gradient(135deg,var(--accent2),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  color:var(--text2);font-size:1.05rem;font-weight:400;
+  max-width:500px;margin:0 auto 44px;line-height:1.7;
+  position:relative;z-index:1;
+  animation:fadeUp 0.6s 0.2s ease both;
+}
+.search-wrap{position:relative;z-index:1;width:100%;max-width:620px;animation:fadeUp 0.6s 0.3s ease both;}
+.search-box{
+  display:flex;background:var(--surface);
+  border:1.5px solid var(--border2);
+  border-radius:100px;padding:6px 6px 6px 24px;
+  gap:8px;box-shadow:0 8px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(108,99,255,0.1);
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.search-box:focus-within{border-color:rgba(108,99,255,0.5);box-shadow:0 8px 40px rgba(0,0,0,0.4),0 0 0 3px rgba(108,99,255,0.12);}
+.search-box input{
+  flex:1;border:none;outline:none;background:transparent;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:0.93rem;color:var(--text);
+}
+.search-box input::placeholder{color:var(--text3);}
+.search-btn{
+  background:linear-gradient(135deg,var(--accent),#5B52E5);
+  color:var(--white);border:none;border-radius:100px;
+  padding:12px 28px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.88rem;
+  cursor:pointer;white-space:nowrap;
+  box-shadow:0 4px 16px var(--accent-glow);
+  transition:all 0.15s;
+}
+.search-btn:hover{opacity:0.88;transform:translateY(-1px);}
+.hero-tags{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+  margin-top:20px;position:relative;z-index:1;
+  animation:fadeUp 0.6s 0.4s ease both;
+}
+.hero-tags a{
+  color:var(--text3);font-size:0.8rem;text-decoration:none;
+  padding:5px 14px;
+  border:1px solid var(--border2);border-radius:100px;
+  background:rgba(255,255,255,0.03);
+  transition:all 0.15s;
+}
+.hero-tags a:hover{color:var(--text);border-color:rgba(108,99,255,0.4);background:rgba(108,99,255,0.08);}
+.hero-stats{
+  display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
+  margin-top:56px;position:relative;z-index:1;
+  animation:fadeUp 0.6s 0.5s ease both;
+}
+.hero-stat-num{
+  font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;
+  background:linear-gradient(135deg,var(--white),var(--text2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-stat-label{font-size:0.75rem;color:var(--text3);margin-top:2px;}
+
+/* SHARED SECTION */
+.section{padding:88px max(20px,5vw);}
+.sec-tag{
+  display:inline-block;
+  background:rgba(108,99,255,0.1);
+  color:var(--accent2);
+  font-size:0.72rem;font-weight:700;letter-spacing:0.06em;
+  padding:5px 14px;border-radius:100px;
+  margin-bottom:14px;
+}
+.sec-title{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(1.7rem,3.5vw,2.5rem);
+  letter-spacing:-0.025em;line-height:1.15;color:var(--white);
+  max-width:560px;
+}
+.sec-sub{color:var(--text2);font-size:0.95rem;margin-top:12px;max-width:480px;line-height:1.7;}
+
+/* CATEGORIES */
+.cat-section{background:var(--bg2);}
+.cat-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+  gap:10px;margin-top:40px;
+}
+.cat-card{
+  background:var(--bg3);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px 16px;
+  cursor:pointer;transition:all 0.2s;
+  text-decoration:none;
+  position:relative;overflow:hidden;
+}
+.cat-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent-glow),transparent);
+  opacity:0;transition:opacity 0.2s;
+}
+.cat-card:hover{border-color:rgba(108,99,255,0.4);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.3);}
+.cat-card:hover::before{opacity:1;}
+.cat-icon{font-size:1.8rem;margin-bottom:10px;display:block;}
+.cat-name{font-weight:700;font-size:0.88rem;color:var(--text);display:block;margin-bottom:3px;position:relative;}
+.cat-count{font-size:0.72rem;color:var(--text3);position:relative;}
+
+/* LISTINGS */
+.listing-section{background:var(--bg);}
+.listing-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  flex-wrap:wrap;gap:16px;margin-bottom:32px;
+}
+.btn-outline-sm{
+  color:var(--text2);font-size:0.83rem;font-weight:600;text-decoration:none;
+  padding:9px 20px;border:1.5px solid var(--border2);border-radius:100px;
+  transition:all 0.15s;
+}
+.btn-outline-sm:hover{background:var(--surface);color:var(--text);border-color:var(--border2);}
+.listing-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));
+  gap:14px;
+}
+.listing-card{
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;cursor:pointer;
+  transition:all 0.2s;text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+}
+.listing-card:hover{border-color:rgba(108,99,255,0.35);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,0.4);}
+.listing-thumb{
+  width:100%;aspect-ratio:16/9;
+  display:flex;align-items:center;justify-content:center;font-size:3rem;
+  position:relative;overflow:hidden;
+}
+.listing-thumb-label{
+  position:absolute;top:10px;right:10px;
+  background:rgba(0,212,170,0.15);border:1px solid rgba(0,212,170,0.3);
+  color:var(--teal);font-size:0.68rem;font-weight:700;
+  padding:3px 10px;border-radius:100px;
+}
+.listing-body{padding:16px;flex:1;display:flex;flex-direction:column;}
+.listing-seller{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.seller-av{
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.72rem;font-weight:700;color:var(--white);flex-shrink:0;
+}
+.seller-name{font-weight:700;font-size:0.78rem;color:var(--text);display:block;}
+.seller-univ{font-size:0.7rem;color:var(--text3);}
+.listing-title{font-weight:600;font-size:0.9rem;color:var(--text);line-height:1.4;margin-bottom:auto;padding-bottom:12px;}
+.listing-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:12px;border-top:1px solid var(--border);margin-top:12px;
+}
+.listing-price{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--white);}
+.listing-rating{display:flex;align-items:center;gap:4px;font-size:0.75rem;color:var(--text3);}
+.star{color:var(--gold);}
+
+/* PAYMENT SECTION */
+.pay-section{background:var(--bg2);}
+.pay-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:40px;}
+.pay-card{
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:28px;
+  position:relative;overflow:hidden;
+  transition:border-color 0.2s;
+}
+.pay-card.featured{border-color:rgba(108,99,255,0.4);}
+.pay-card.featured::before{
+  content:'Tersedia';position:absolute;top:16px;right:16px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));
+  color:var(--white);font-size:0.68rem;font-weight:700;
+  padding:3px 12px;border-radius:100px;
+}
+.pay-logo{font-size:2.4rem;margin-bottom:14px;display:block;}
+.pay-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--white);margin-bottom:6px;}
+.pay-desc{font-size:0.83rem;color:var(--text2);line-height:1.6;margin-bottom:16px;}
+.pay-num{
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg);border:1px solid var(--border2);
+  border-radius:var(--radius-xs);padding:10px 14px;
+  font-size:0.88rem;font-weight:600;color:var(--text);
+  cursor:pointer;transition:border-color 0.15s;
+}
+.pay-num:hover{border-color:rgba(108,99,255,0.4);}
+.pay-num-icon{font-size:1rem;}
+.copy-btn{
+  margin-left:auto;background:none;border:none;cursor:pointer;
+  color:var(--text3);font-size:0.72rem;font-weight:600;
+  padding:4px 10px;border-radius:var(--radius-xs);
+  background:var(--surface);transition:all 0.15s;
+}
+.copy-btn:hover{color:var(--teal);}
+.pay-features{list-style:none;margin-top:16px;}
+.pay-features li{
+  font-size:0.8rem;color:var(--text2);
+  display:flex;align-items:center;gap:8px;margin-bottom:7px;
+}
+.pay-features li::before{content:'✓';color:var(--teal);font-weight:700;}
+
+/* HOW IT WORKS */
+.how-section{background:var(--bg);}
+.how-steps{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;margin-top:48px;
+}
+.how-step{
+  background:var(--bg2);padding:32px 28px;position:relative;
+}
+.step-num-pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#5B52E5);
+  color:var(--white);font-weight:800;font-size:0.85rem;
+  margin-bottom:16px;box-shadow:0 4px 16px var(--accent-glow);
+}
+.how-step h3{font-weight:700;font-size:0.95rem;color:var(--white);margin-bottom:8px;}
+.how-step p{font-size:0.82rem;color:var(--text2);line-height:1.6;max-width:220px;}
+
+/* FEEDBACK SECTION */
+.feedback-section{background:var(--bg2);}
+.feedback-wrap{
+  max-width:640px;margin:40px auto 0;
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+}
+.feedback-tabs{display:flex;border-bottom:1px solid var(--border);}
+.feedback-tab{
+  flex:1;padding:14px;text-align:center;
+  font-size:0.85rem;font-weight:600;color:var(--text2);
+  cursor:pointer;border:none;background:none;
+  transition:all 0.15s;border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+}
+.feedback-tab.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.feedback-panel{padding:28px;display:none;}
+.feedback-panel.active{display:block;}
+.form-group{margin-bottom:16px;}
+.form-label{font-size:0.8rem;font-weight:600;color:var(--text2);margin-bottom:6px;display:block;}
+.form-input,.form-textarea,.form-select{
+  width:100%;background:var(--bg);
+  border:1.5px solid var(--border2);
+  border-radius:var(--radius-xs);
+  padding:11px 14px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;color:var(--text);
+  outline:none;transition:border-color 0.15s;
+}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:rgba(108,99,255,0.5);}
+.form-textarea{resize:vertical;min-height:110px;}
+.form-select option{background:var(--bg3);}
+.star-rating{display:flex;gap:6px;margin-bottom:6px;}
+.star-btn{
+  font-size:1.5rem;background:none;border:none;cursor:pointer;
+  color:var(--border2);transition:color 0.1s;
+}
+.star-btn.on{color:var(--gold);}
+.btn-submit{
+  width:100%;background:linear-gradient(135deg,var(--accent),#5B52E5);
+  color:var(--white);border:none;border-radius:100px;
+  padding:13px;font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;font-size:0.9rem;cursor:pointer;
+  box-shadow:0 4px 20px var(--accent-glow);transition:all 0.15s;margin-top:4px;
+}
+.btn-submit:hover{opacity:0.88;transform:translateY(-1px);}
+.success-msg{
+  display:none;text-align:center;padding:20px 0;
+}
+.success-msg .check{font-size:2.5rem;margin-bottom:10px;}
+.success-msg h4{font-weight:700;color:var(--white);margin-bottom:6px;}
+.success-msg p{font-size:0.85rem;color:var(--text2);}
+
+/* TESTIMONIALS */
+.testi-section{background:var(--bg);}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:14px;margin-top:40px;}
+.testi-card{
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:24px;transition:border-color 0.2s;
+}
+.testi-card:hover{border-color:rgba(108,99,255,0.3);}
+.testi-stars{color:var(--gold);font-size:0.83rem;margin-bottom:12px;}
+.testi-text{font-size:0.88rem;color:var(--text2);line-height:1.7;margin-bottom:16px;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:10px;}
+.testi-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:var(--white);flex-shrink:0;}
+.testi-name{font-size:0.85rem;font-weight:700;color:var(--white);}
+.testi-role{font-size:0.72rem;color:var(--text3);}
+
+/* DUAL CTA */
+.cta-section{
+  background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  border-top:1px solid var(--border);
+  display:flex;flex-wrap:wrap;
+}
+.cta-half{flex:1 1 300px;padding:68px max(28px,5vw);}
+.cta-half:first-child{border-right:1px solid var(--border);}
+.cta-half h2{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(1.5rem,2.8vw,2.1rem);
+  letter-spacing:-0.02em;color:var(--white);line-height:1.2;margin-bottom:12px;
+}
+.cta-half p{font-size:0.88rem;color:var(--text2);max-width:340px;line-height:1.7;margin-bottom:28px;}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--accent),#5B52E5);
+  color:var(--white);font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;font-size:0.88rem;padding:14px 28px;
+  border-radius:100px;text-decoration:none;width:fit-content;
+  box-shadow:0 4px 20px var(--accent-glow);transition:all 0.15s;border:none;cursor:pointer;
+}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;font-size:0.88rem;padding:14px 28px;
+  border-radius:100px;text-decoration:none;width:fit-content;
+  border:1.5px solid var(--border2);transition:all 0.15s;
+}
+.btn-ghost:hover{background:var(--surface);border-color:var(--border2);}
+
+/* FOOTER */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:56px max(20px,5vw) 28px;
+}
+.footer-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:wrap;gap:40px;padding-bottom:48px;
+  border-bottom:1px solid var(--border);margin-bottom:28px;
+}
+.footer-brand{max-width:260px;}
+.footer-brand .nav-logo{color:var(--text);}
+.footer-brand p{font-size:0.8rem;color:var(--text3);margin-top:10px;line-height:1.65;}
+.footer-socials{display:flex;gap:8px;margin-top:16px;}
+.social-btn{
+  width:36px;height:36px;border-radius:var(--radius-xs);
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;font-size:0.9rem;transition:all 0.15s;
+}
+.social-btn:hover{background:var(--bg3);border-color:var(--border2);}
+.footer-links-grid{display:flex;gap:48px;flex-wrap:wrap;}
+.footer-col h4{font-weight:700;font-size:0.8rem;color:var(--text);margin-bottom:14px;}
+.footer-col a{
+  display:block;font-size:0.78rem;color:var(--text3);
+  text-decoration:none;margin-bottom:9px;transition:color 0.15s;
+}
+.footer-col a:hover{color:var(--text);}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;font-size:0.73rem;color:var(--text3);
+}
+.footer-bottom a{color:var(--text3);text-decoration:none;}
+.footer-bottom a:hover{color:var(--text2);}
+
+/* CHATBOT */
+.chat-fab{
+  position:fixed;bottom:28px;right:28px;z-index:300;
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#5B52E5);
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px var(--accent-glow),0 4px 16px rgba(0,0,0,0.4);
+  transition:transform 0.2s,box-shadow 0.2s;
+  font-size:1.4rem;
+}
+.chat-fab:hover{transform:scale(1.08);box-shadow:0 12px 40px var(--accent-glow),0 6px 20px rgba(0,0,0,0.5);}
+.chat-fab-badge{
+  position:absolute;top:-2px;right:-2px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--teal);
+  border:2px solid var(--bg);
+  box-shadow:0 0 8px var(--teal);
+}
+.chat-window{
+  position:fixed;bottom:96px;right:28px;z-index:299;
+  width:360px;max-height:540px;
+  background:var(--bg2);border:1.5px solid var(--border2);
+  border-radius:var(--radius);
+  display:none;flex-direction:column;
+  box-shadow:0 24px 64px rgba(0,0,0,0.6);
+  overflow:hidden;
+  animation:chatIn 0.25s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes chatIn{from{opacity:0;transform:translateY(16px) scale(0.95);}to{opacity:1;transform:none;}}
+.chat-window.open{display:flex;}
+.chat-head{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:var(--bg3);border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.chat-head-av{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--teal));
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  flex-shrink:0;
+}
+.chat-head-info{flex:1;}
+.chat-head-name{font-weight:700;font-size:0.88rem;color:var(--white);}
+.chat-head-status{font-size:0.7rem;color:var(--teal);display:flex;align-items:center;gap:5px;}
+.chat-head-status::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);}
+.chat-close{background:none;border:none;cursor:pointer;color:var(--text3);font-size:1.1rem;padding:4px;border-radius:var(--radius-xs);transition:all 0.15s;}
+.chat-close:hover{background:var(--surface);color:var(--text);}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:0;}
+.chat-msgs::-webkit-scrollbar{width:4px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--surface);border-radius:2px;}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:0.83rem;line-height:1.55;}
+.msg.bot{
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);border-bottom-left-radius:4px;align-self:flex-start;
+}
+.msg.user{
+  background:linear-gradient(135deg,var(--accent),#5B52E5);
+  color:var(--white);border-bottom-right-radius:4px;align-self:flex-end;
+}
+.msg a{color:var(--teal);text-decoration:none;}
+.msg a:hover{text-decoration:underline;}
+.msg-time{font-size:0.65rem;color:var(--text3);margin-top:3px;display:block;}
+.chat-quick{
+  padding:8px 12px 0;
+  display:flex;flex-wrap:wrap;gap:6px;
+  flex-shrink:0;
+}
+.quick-btn{
+  background:var(--surface);border:1px solid var(--border2);
+  color:var(--text2);font-size:0.72rem;font-weight:600;
+  padding:5px 12px;border-radius:100px;cursor:pointer;
+  transition:all 0.15s;white-space:nowrap;
+}
+.quick-btn:hover{background:rgba(108,99,255,0.12);border-color:rgba(108,99,255,0.3);color:var(--accent2);}
+.chat-input-row{
+  display:flex;gap:8px;padding:12px;
+  border-top:1px solid var(--border);flex-shrink:0;
+}
+.chat-input{
+  flex:1;background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:100px;padding:9px 16px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;color:var(--text);
+  outline:none;transition:border-color 0.15s;
+}
+.chat-input:focus{border-color:rgba(108,99,255,0.4);}
+.chat-send{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),#5B52E5);
+  border:none;cursor:pointer;color:var(--white);font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.15s,opacity 0.15s;
+}
+.chat-send:hover{transform:scale(1.08);}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--bg3);border:1px solid var(--teal);
+  color:var(--text);font-size:0.83rem;font-weight:600;
+  padding:10px 20px;border-radius:100px;
+  opacity:0;transition:all 0.3s;z-index:400;white-space:nowrap;
+  box-shadow:0 8px 32px rgba(0,212,170,0.2);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:768px){
+  .nav-links a:not(.nav-btn):not(:last-child){display:none;}
+  .hamburger{display:block;}
+  .hero h1{font-size:2.4rem;}
+  .search-box{flex-direction:column;border-radius:var(--radius);padding:12px;}
+  .search-btn{border-radius:var(--radius-xs);text-align:center;}
+  .cta-half:first-child{border-right:none;border-bottom:1px solid var(--border);}
+  .chat-window{width:calc(100vw - 32px);right:16px;bottom:88px;}
+  .chat-fab{right:16px;bottom:16px;}
+}
+/* === FITUR TAMBAHAN === */
+.nbtn{background:none;border:1px solid var(--border2);color:var(--text);font-family:inherit;font-weight:600;font-size:.82rem;padding:7px 14px;border-radius:100px;cursor:pointer;margin-right:4px}
+.nbtn:hover{background:var(--surface)}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+.toolbar .form-input,.toolbar .form-select{width:auto;flex:1 1 150px;min-width:0}
+#lcount{color:var(--text3);font-size:.8rem}
+.empty{grid-column:1/-1;text-align:center;color:var(--text2);padding:48px 0}
+.listing-thumb{position:relative}
+.heart{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:none;background:rgba(7,9,15,.6);color:#fff;font-size:1.1rem;cursor:pointer}
+.heart.on{color:var(--danger)}
+#mdl,#adm{position:fixed;inset:0;display:none}
+#mdl{z-index:500;background:rgba(3,5,10,.72);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
+#mdl.on{display:flex}
+.mbox{position:relative;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:28px;width:100%;max-width:440px;max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.mbox.wide{max-width:620px}
+.mbox h3{font-family:'Syne',sans-serif;font-size:1.3rem}
+.mbox p,.mbox label{font-size:.88rem;color:var(--text2)}
+.mx{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--text2);font-size:1.1rem;cursor:pointer}
+.err{color:var(--danger);font-size:.82rem;min-height:1em}
+.btn-alt,.mini{font-family:inherit;background:var(--surface);border:1px solid var(--border2);color:var(--text);border-radius:var(--radius-sm);cursor:pointer;font-weight:600}
+.btn-alt{padding:11px;font-size:.85rem}
+.mini{padding:4px 10px;font-size:.75rem;margin:2px}
+.mini:hover,.btn-alt:hover{border-color:var(--accent)}
+.dthumb{height:120px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:3rem}
+.sum{background:var(--bg3);border-radius:var(--radius-sm);padding:12px 14px;font-size:.85rem;color:var(--text2)}
+.pm{display:flex;flex-direction:column;gap:6px}
+.chip{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 10px;border-radius:100px;background:rgba(108,99,255,.15);color:var(--accent2)}
+.chip.ok{background:var(--teal-glow);color:var(--teal)}.chip.bad{background:rgba(255,95,126,.15);color:var(--danger)}
+.row{border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;display:flex;flex-direction:column;gap:6px;font-size:.85rem}
+#adm{z-index:600;background:var(--bg);overflow:auto}#adm.on{display:block}
+.ahead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px max(16px,3vw);border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg2);z-index:2}
+.ahead b{font-family:'Syne',sans-serif;font-size:1.1rem;margin-right:auto}
+.ahead .mini.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.abody{padding:24px max(16px,3vw);max-width:1100px;margin:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
+.stat b{display:block;font-size:1.4rem;font-family:'Syne',sans-serif}.stat span{font-size:.78rem;color:var(--text2)}
+.bar{display:grid;grid-template-columns:170px 1fr 30px;gap:10px;align-items:center;font-size:.82rem;margin:6px 0}
+.bar i{display:block;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--teal));min-width:2px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.82rem}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--border);vertical-align:middle}th{color:var(--text3)}
+.abody select{background:var(--bg3);color:var(--text);border:1px solid var(--border2);border-radius:6px;padding:4px}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}.shake{animation:shake .3s}
+/* === TAMPILAN PREMIUM === */
+:root{--gold2:#FFE29A}
+.topbar{position:fixed;top:0;left:0;right:0;height:28px;z-index:201;display:flex;align-items:center;justify-content:center;font-size:.72rem;background:var(--bg2);border-bottom:1px solid var(--border)}
+.topbar a{color:var(--text3);text-decoration:none}.topbar a:hover{color:var(--text2)}.topbar b{color:var(--gold);font-weight:600}
+nav{top:28px}.mobile-nav{top:96px}.hero{padding-top:148px}
+.hero-bg{background:radial-gradient(ellipse 55% 50% at 18% 45%,rgba(108,99,255,.17),transparent 65%),radial-gradient(ellipse 45% 40% at 82% 38%,rgba(0,212,170,.1),transparent 60%),radial-gradient(ellipse 35% 30% at 55% 95%,rgba(255,181,71,.12),transparent 65%);background-size:130% 130%;animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{to{background-position:100% 60%}}
+.hero h1 .gradient-text{background:linear-gradient(120deg,#FFE29A,#FFB547 40%,#8B84FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sec-tag{color:var(--gold)!important}
+.listing-card,.cat-card,.pay-card,.testi-card{transition:transform .25s,box-shadow .25s,border-color .25s}
+.listing-card:hover,.cat-card:hover,.pay-card:hover,.testi-card:hover{transform:translateY(-4px);border-color:rgba(255,181,71,.45)!important;box-shadow:0 18px 44px rgba(0,0,0,.45),0 0 0 1px rgba(255,181,71,.14)}
+.listing-thumb-label{background:linear-gradient(135deg,#FFE29A,#FFB547)!important;color:#2a1a00!important;font-weight:700}
+.vf{color:var(--gold);font-size:.7rem}
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:300;background:linear-gradient(90deg,var(--gold),var(--accent),var(--teal))}
+#totop{position:fixed;left:16px;bottom:16px;width:40px;height:40px;border-radius:50%;border:1px solid var(--border2);background:var(--bg3);color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;z-index:150}
+#totop.on{opacity:1;pointer-events:auto}
+.faq-section{padding-bottom:40px}.faq-wrap{max-width:760px;margin:28px auto 0}
+details{border-bottom:1px solid var(--border);padding:16px 4px}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}summary::after{content:'+';color:var(--gold);font-size:1.2rem}
+details[open] summary::after{content:'–'}details p{color:var(--text2);margin-top:10px;font-size:.92rem;max-width:68ch}
+.tl{display:flex;gap:4px}.tl i{flex:1;height:6px;border-radius:3px;background:var(--bg3)}.tl i.on{background:linear-gradient(90deg,var(--gold),var(--teal))}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.hero-bg{animation:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><a href="https://instagram.com/aditya.djody" target="_blank" rel="noopener">📸 Ikuti kami di Instagram <b>@aditya.djody</b></a></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo"><span class="nav-logo-dot"></span>FinovaKarya</a>
+  <div class="nav-links">
+    <a href="#categories">Jelajahi</a>
+    <a href="#payment">Pembayaran</a>
+    <a href="#faq">FAQ</a>
+    <a href="#feedback">Kritik & Saran</a>
+    <span id="navUser"></span>
+    <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#categories" onclick="toggleMobileNav()">🗂 Jelajahi Jasa</a>
+  <a href="#payment" onclick="toggleMobileNav()">💳 Metode Pembayaran</a>
+  <a href="#how" onclick="toggleMobileNav()">❓ Cara Kerja</a>
+  <a href="#faq" onclick="toggleMobileNav()">🙋 FAQ</a>
+  <a href="#feedback" onclick="toggleMobileNav()">💬 Kritik & Saran</a>
+  <a href="#" class="nav-btn" onclick="toggleMobileNav();ME?menu():openAuth('register');return false">Masuk / Daftar</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span>Platform #1 Mahasiswa Indonesia</div>
+  <h1>Skill-mu adalah<br><span class="gradient-text">bisnis nyata</span>-mu</h1>
+  <p class="hero-sub">Marketplace jasa eksklusif untuk mahasiswa Indonesia. Jual skill, cari tenaga ahli, bayar aman.</p>
+  <div class="search-wrap">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari jasa: logo, website, skripsi, video..." onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="search-btn" onclick="doSearch()">Cari Sekarang</button>
+    </div>
+  </div>
+  <div class="hero-tags">
+    <a href="#">🎨 Desain Grafis</a>
+    <a href="#">💻 Web Dev</a>
+    <a href="#">📝 Terjemahan</a>
+    <a href="#">🎬 Video Editing</a>
+    <a href="#">📊 Data Analysis</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">12.400+</div><div class="hero-stat-label">Mahasiswa aktif</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">8.700+</div><div class="hero-stat-label">Proyek selesai</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">340+</div><div class="hero-stat-label">Kampus se-Indonesia</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">4.9★</div><div class="hero-stat-label">Rating platform</div></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section cat-section" id="categories">
+  <div class="sec-tag">Kategori Jasa</div>
+  <div class="sec-title">Temukan yang kamu butuhkan</div>
+  <p class="sec-sub">Semua dikerjakan mahasiswa terverifikasi dari 340+ kampus terkemuka Indonesia.</p>
+  <div class="cat-grid">
+    <a href="#" class="cat-card"><span class="cat-icon">🎨</span><span class="cat-name">Desain Grafis</span><span class="cat-count">1.240 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">💻</span><span class="cat-name">Web & App Dev</span><span class="cat-count">876 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">📝</span><span class="cat-name">Penulisan</span><span class="cat-count">643 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">🎬</span><span class="cat-name">Video & Animasi</span><span class="cat-count">512 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">📊</span><span class="cat-name">Olah Data</span><span class="cat-count">430 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">🎙</span><span class="cat-name">Voiceover</span><span class="cat-count">198 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">📸</span><span class="cat-name">Fotografi</span><span class="cat-count">355 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">🤳</span><span class="cat-name">Konten Sosmed</span><span class="cat-count">671 penyedia</span></a>
+    <a href="#" class="cat-card"><span class="cat-icon">🧮</span><span class="cat-name">Akuntansi</span><span class="cat-count">290 penyedia</span></a>
+  </div>
+</section>
+
+<!-- FEATURED LISTINGS -->
+<section class="section listing-section" id="listings">
+  <div class="listing-header">
+    <div>
+      <div class="sec-tag">Pilihan Populer</div>
+      <div class="sec-title">Trending minggu ini</div>
+    </div>
+    <a href="#" class="btn-outline-sm">Lihat semua</a>
+  </div>
+  <div class="toolbar"><input id="fq" class="form-input" placeholder="Filter jasa..." oninput="F.q=this.value.toLowerCase();renderL()"><select id="fc" class="form-select" onchange="F.cat=this.value;renderL()"></select><select class="form-select" onchange="F.sort=this.value;renderL()"><option value="pop">Terpopuler</option><option value="rate">Rating tertinggi</option><option value="lo">Harga termurah</option><option value="hi">Harga tertinggi</option></select><select class="form-select" onchange="F.max=+this.value;renderL()"><option value="0">Semua harga</option><option value="100000">Maks. Rp100.000</option><option value="200000">Maks. Rp200.000</option><option value="300000">Maks. Rp300.000</option></select><button class="mini" id="favb" onclick="F.fav=!F.fav;renderL()">♡ Favorit</button><button class="mini" onclick="sellForm()">➕ Jual jasa</button><span id="lcount"></span></div>
+  <div class="listing-grid" id="lg"></div>
+</section>
+
+<!-- PAYMENT -->
+<section class="section pay-section" id="payment">
+  <div class="sec-tag">Metode Pembayaran</div>
+  <div class="sec-title">Bayar mudah, aman & terpercaya</div>
+  <p class="sec-sub">Dana tersimpan di escrow — hanya dikirim ke penyedia setelah kamu puas dengan hasil kerja.</p>
+  <div class="pay-grid">
+    <div class="pay-card featured">
+      <span class="pay-logo">💙</span>
+      <div class="pay-name">DANA</div>
+      <p class="pay-desc">Pembayaran instan via DANA. Transfer langsung ke nomor terdaftar, dikonfirmasi otomatis dalam detik.</p>
+      <div class="pay-num" onclick="copyNum('082395139998','DANA')">
+        <span class="pay-num-icon">📱</span>
+        <span>082395139998</span>
+        <button class="copy-btn" onclick="event.stopPropagation();copyNum('082395139998','DANA')">Salin</button>
+      </div>
+      <ul class="pay-features">
+        <li>Transfer real-time, 24/7</li>
+        <li>Konfirmasi otomatis</li>
+        <li>Proteksi escrow penuh</li>
+        <li>Tidak ada biaya tambahan</li>
+      </ul>
+    </div>
+    <div class="pay-card">
+      <span class="pay-logo">🏦</span>
+      <div class="pay-name">Transfer Bank</div>
+      <p class="pay-desc">Bayar lewat transfer bank manapun. Mendukung BCA, Mandiri, BNI, BRI, dan 100+ bank lainnya.</p>
+      <ul class="pay-features">
+        <li>Semua bank didukung</li>
+        <li>Konfirmasi dalam 1×24 jam</li>
+        <li>Minimal transfer Rp10.000</li>
+        <li>Bukti transfer diperlukan</li>
+      </ul>
+    </div>
+    <div class="pay-card">
+      <span class="pay-logo">💚</span>
+      <div class="pay-name">GoPay & OVO</div>
+      <p class="pay-desc">Bayar menggunakan GoPay atau OVO. Proses cepat, langsung dari aplikasi dompet digitalmu.</p>
+      <ul class="pay-features">
+        <li>Proses instan</li>
+        <li>Cashback tersedia</li>
+        <li>Minimal transaksi Rp25.000</li>
+        <li>Segera tersedia</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section" id="how">
+  <div class="sec-tag">Cara Kerja</div>
+  <div class="sec-title">Mulai dalam hitungan menit</div>
+  <div class="how-steps">
+    <div class="how-step"><div class="step-num-pill">1</div><h3>Cari atau posting</h3><p>Temukan penyedia jasa via pencarian, atau posting kebutuhanmu dan tunggu penawaran masuk.</p></div>
+    <div class="how-step"><div class="step-num-pill">2</div><h3>Diskusikan detail</h3><p>Chat langsung, sepakati harga, deadline dan jumlah revisi sebelum membayar.</p></div>
+    <div class="how-step"><div class="step-num-pill">3</div><h3>Bayar dengan escrow</h3><p>Dana tersimpan aman, hanya diteruskan ke penyedia setelah kamu puas dengan hasil.</p></div>
+    <div class="how-step"><div class="step-num-pill">4</div><h3>Terima & beri ulasan</h3><p>Unduh hasil, berikan rating dan ulasan untuk membantu ekosistem mahasiswa berkembang.</p></div>
+  </div>
+</section>
+
+<section class="section faq-section" id="faq"><div style="text-align:center"><div class="sec-tag" style="display:inline-block">FAQ</div><div class="sec-title" style="max-width:100%;text-align:center">Pertanyaan yang sering muncul</div></div><div class="faq-wrap"><details><summary>Apakah aman bertransaksi di FinovaKarya?</summary><p>Dana ditahan lewat sistem escrow dan baru diteruskan ke penyedia setelah kamu mengonfirmasi hasil kerja.</p></details><details><summary>Berapa komisi platform?</summary><p>10% dari transaksi yang berhasil. Tidak ada biaya daftar atau biaya listing.</p></details><details><summary>Bagaimana cara mulai menjual jasa?</summary><p>Daftar akun, buka menu akun, pilih "Jual jasa", isi judul, kategori, harga, dan deskripsi.</p></details><details><summary>Bagaimana cara membayar?</summary><p>Buat pesanan, transfer sesuai metode yang dipilih, lalu kirim bukti ke WhatsApp admin. Status pesanan akan diperbarui.</p></details><details><summary>Bagaimana jika hasil tidak sesuai?</summary><p>Jangan konfirmasi selesai dulu. Hubungi admin lewat WhatsApp untuk proses revisi atau refund.</p></details></div></section>
+
+<!-- FEEDBACK -->
+<section class="section feedback-section" id="feedback">
+  <div style="text-align:center;">
+    <div class="sec-tag" style="display:inline-block;">Kritik & Saran</div>
+    <div class="sec-title" style="max-width:100%;text-align:center;">Suara kamu membentuk platform ini</div>
+    <p class="sec-sub" style="max-width:100%;text-align:center;margin:12px auto 0;">Kritik, saran, dan laporan bug — semua kami baca dan tindaklanjuti.</p>
+  </div>
+  <div class="feedback-wrap">
+    <div class="feedback-tabs">
+      <button class="feedback-tab active" onclick="switchTab('kritik')">💡 Kritik & Saran</button>
+      <button class="feedback-tab" onclick="switchTab('ulasan')">⭐ Beri Ulasan</button>
+      <button class="feedback-tab" onclick="switchTab('laporan')">🐛 Laporan Bug</button>
+    </div>
+    <!-- Kritik -->
+    <div class="feedback-panel active" id="tab-kritik">
+      <div id="form-kritik">
+        <div class="form-group">
+          <label class="form-label">Nama kamu</label>
+          <input type="text" class="form-input" placeholder="Nama lengkap / anonim">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kategori</label>
+          <select class="form-select">
+            <option>Tampilan & Desain</option>
+            <option>Fitur Baru</option>
+            <option>Alur Transaksi</option>
+            <option>Layanan Customer</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pesan kamu</label>
+          <textarea class="form-textarea" placeholder="Tuliskan kritik atau saranmu di sini..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitFeedback('form-kritik','success-kritik')">Kirim Pesan</button>
+      </div>
+      <div class="success-msg" id="success-kritik"><div class="check">✅</div><h4>Terima kasih!</h4><p>Kritik & saranmu sudah kami terima. Tim FinovaKarya akan meninjau dan menindaklanjuti.</p></div>
+    </div>
+    <!-- Ulasan -->
+    <div class="feedback-panel" id="tab-ulasan">
+      <div id="form-ulasan">
+        <div class="form-group">
+          <label class="form-label">Rating pengalaman</label>
+          <div class="star-rating" id="starRating">
+            <button class="star-btn" data-val="1" onclick="setRating(1)">★</button>
+            <button class="star-btn" data-val="2" onclick="setRating(2)">★</button>
+            <button class="star-btn" data-val="3" onclick="setRating(3)">★</button>
+            <button class="star-btn" data-val="4" onclick="setRating(4)">★</button>
+            <button class="star-btn" data-val="5" onclick="setRating(5)">★</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nama & asal kampus</label>
+          <input type="text" class="form-input" placeholder="cth: Budi – Universitas Indonesia">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ulasanmu</label>
+          <textarea class="form-textarea" placeholder="Ceritakan pengalamanmu menggunakan FinovaKarya..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitFeedback('form-ulasan','success-ulasan')">Kirim Ulasan</button>
+      </div>
+      <div class="success-msg" id="success-ulasan"><div class="check">🌟</div><h4>Ulasan terkirim!</h4><p>Ulasanmu akan ditampilkan setelah diverifikasi. Terima kasih sudah membantu komunitas!</p></div>
+    </div>
+    <!-- Laporan -->
+    <div class="feedback-panel" id="tab-laporan">
+      <div id="form-laporan">
+        <div class="form-group">
+          <label class="form-label">Jenis masalah</label>
+          <select class="form-select">
+            <option>Bug / Error</option>
+            <option>Masalah Pembayaran</option>
+            <option>Konten Melanggar Aturan</option>
+            <option>Akun Bermasalah</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Deskripsi masalah</label>
+          <textarea class="form-textarea" placeholder="Jelaskan masalah yang kamu alami secara detail..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email untuk follow-up (opsional)</label>
+          <input type="email" class="form-input" placeholder="email@kamu.com">
+        </div>
+        <button class="btn-submit" onclick="submitFeedback('form-laporan','success-laporan')">Kirim Laporan</button>
+      </div>
+      <div class="success-msg" id="success-laporan"><div class="check">🛡️</div><h4>Laporan diterima!</h4><p>Tim teknis kami akan segera meninjau. Untuk urgensi, hubungi <a href="https://wa.me/6282395139998" target="_blank" style="color:var(--teal);">WhatsApp</a> kami.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testi-section">
+  <div class="sec-tag">Cerita Nyata</div>
+  <div class="sec-title">Mahasiswa yang sudah buktikan</div>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"3 bulan di FinovaKarya, penghasilan side-income saya sudah lebih dari UMR. Klien datang sendiri, saya fokus ngerjain."</p><div class="testi-author"><div class="testi-av" style="background:#6C63FF;">RS</div><div><div class="testi-name">Rizky Santoso</div><div class="testi-role">Teknik, Universitas Brawijaya</div></div></div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Saya temukan desainer logo untuk startup dalam 2 jam. Hasilnya profesional, harganya setara makan siang dua kali."</p><div class="testi-author"><div class="testi-av" style="background:#00D4AA;">AP</div><div><div class="testi-name">Annisa Putri</div><div class="testi-role">Co-founder Startup, Bandung</div></div></div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Portofolio saya berkembang pesat. Semua proyek dari FinovaKarya masuk CV, interview kerja jadi jauh lebih lancar."</p><div class="testi-author"><div class="testi-av" style="background:#FF5F7E;">MF</div><div><div class="testi-name">M. Farhan</div><div class="testi-role">DKV, BINUS University</div></div></div></div>
+  </div>
+</section>
+
+<!-- DUAL CTA -->
+<div class="cta-section">
+  <div class="cta-half">
+    <h2>Butuh bantuan untuk proyekmu?</h2>
+    <p>Temukan mahasiswa berbakat dengan harga terjangkau dari 340+ kampus seluruh Indonesia.</p>
+    <a href="#" class="btn-primary">Cari Penyedia Jasa</a>
+  </div>
+  <div class="cta-half">
+    <h2>Punya skill yang bisa menghasilkan?</h2>
+    <p>Daftar gratis, buat profil dalam 10 menit, dan mulai terima orderan pertamamu hari ini.</p>
+    <a href="#" class="btn-ghost">Mulai Jual Jasa</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo"><span class="nav-logo-dot"></span>FinovaKarya</a>
+      <p>Platform marketplace jasa eksklusif untuk mahasiswa Indonesia. Skill jadi penghasilan nyata.</p>
+      <div class="footer-socials">
+        <a href="https://instagram.com/aditya.djody" target="_blank" class="social-btn" title="Instagram @aditya.djody">📸</a>
+        <a href="https://wa.me/6282395139998" target="_blank" class="social-btn" title="WhatsApp 082395139998">💬</a>
+        <a href="#" class="social-btn" title="TikTok">🎵</a>
+        <a href="#" class="social-btn" title="LinkedIn">💼</a>
+      </div>
+      <div style="margin-top:12px;font-size:0.75rem;color:var(--text3);">
+        📸 <a href="https://instagram.com/aditya.djody" target="_blank" style="color:var(--accent2);text-decoration:none;">@aditya.djody</a>
+      </div>
+    </div>
+    <div class="footer-links-grid">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="#">Cara Kerja</a>
+        <a href="#">Harga & Komisi</a>
+        <a href="#">Escrow & Keamanan</a>
+        <a href="#">Kebijakan Privasi</a>
+      </div>
+      <div class="footer-col">
+        <h4>Mahasiswa</h4>
+        <a href="#">Daftar Penjual</a>
+        <a href="#">Tips Sukses</a>
+        <a href="#">Komunitas</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Bantuan</h4>
+        <a href="#feedback">Kritik & Saran</a>
+        <a href="https://wa.me/6282395139998" target="_blank">WhatsApp CS</a>
+        <a href="https://instagram.com/aditya.djody" target="_blank">Instagram</a>
+        <a href="#">Pusat Bantuan</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 FinovaKarya. Dibuat dengan ☕ untuk mahasiswa Indonesia.</span>
+    <span><a href="https://wa.me/6282395139998" target="_blank">082395139998</a> · <a href="https://instagram.com/aditya.djody" target="_blank">@aditya.djody</a></span>
+  </div>
+</footer>
+
+<!-- CHATBOT FAB -->
+<button class="chat-fab" onclick="toggleChat()" aria-label="Buka Chatbot">
+  <span id="chatFabIcon">💬</span>
+  <div class="chat-fab-badge"></div>
+</button>
+
+<!-- CHAT WINDOW -->
+<div class="chat-window" id="chatWindow">
+  <div class="chat-head">
+    <div class="chat-head-av">🤖</div>
+    <div class="chat-head-info">
+      <div class="chat-head-name">Nova — Asisten FinovaKarya</div>
+      <div class="chat-head-status">Online sekarang</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="msg bot">
+      👋 Halo! Saya <strong>Nova</strong>, asisten virtual FinovaKarya.<br><br>Ada yang bisa saya bantu? Tanya tentang cara daftar, pembayaran, atau fitur platform kami!
+      <span class="msg-time">Sekarang</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="quickBtns">
+    <button class="quick-btn" onclick="sendQuick('Cara daftar sebagai penjual?')">Cara daftar?</button>
+    <button class="quick-btn" onclick="sendQuick('Metode pembayaran apa saja?')">Pembayaran?</button>
+    <button class="quick-btn" onclick="sendQuick('Berapa komisi platform?')">Komisi?</button>
+    <button class="quick-btn" onclick="sendQuick('Hubungi admin')">Hubungi Admin</button>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ketik pertanyaanmu..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<div id="mdl" onclick="if(event.target===this)closeM()"></div>
+<div id="adm"></div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== MOBILE NAV =====
+function toggleMobileNav(){
+  const mn=document.getElementById('mobileNav');
+  mn.classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('nav')&&!e.target.closest('.mobile-nav')){
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+});
+
+// ===== SEARCH =====
+function doSearch(){
+  const q=document.getElementById('searchInput').value.trim();
+  if(q){showToast('🔍 Mencari: '+q+'...');setTimeout(()=>document.getElementById('listings').scrollIntoView({behavior:'smooth'}),500);}
+  else document.getElementById('listings').scrollIntoView({behavior:'smooth'});
+}
+
+// ===== COPY NUMBER =====
+function copyNum(num,name){
+  navigator.clipboard.writeText(num).then(()=>{showToast('✅ Nomor '+name+' ('+num+') disalin!');}).catch(()=>{showToast('Nomor: '+num);});
+}
+
+// ===== TOAST =====
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ===== FEEDBACK TABS =====
+function switchTab(id){
+  document.querySelectorAll('.feedback-tab').forEach((t,i)=>{
+    const ids=['kritik','ulasan','laporan'];
+    t.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.feedback-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+function submitFeedback(formId,successId){
+  document.getElementById(formId).style.display='none';
+  document.getElementById(successId).style.display='block';
+}
+
+// ===== STAR RATING =====
+let currentRating=0;
+function setRating(val){
+  currentRating=val;
+  document.querySelectorAll('.star-btn').forEach(b=>{
+    b.classList.toggle('on',parseInt(b.dataset.val)<=val);
+  });
+}
+
+// ===== CHAT BOT =====
+let chatOpen=false;
+const botKB={
+  'cara daftar':'Untuk daftar sebagai penjual:\n1. Klik tombol "Daftar Gratis" di navbar\n2. Isi data dirimu (nama, kampus, email)\n3. Upload KTM untuk verifikasi\n4. Buat profil dan listing pertamamu\n\nProses verifikasi 1×24 jam! 🚀',
+  'pembayaran':'FinovaKarya mendukung:\n💙 DANA — 082395139998 (instan)\n🏦 Transfer Bank (semua bank)\n💚 GoPay & OVO (segera)\n\nSemua transaksi dilindungi sistem escrow — dana hanya dikirim setelah kamu puas! 🛡️',
+  'komisi':'Platform FinovaKarya mengambil komisi sebesar **10%** dari setiap transaksi yang berhasil. Tidak ada biaya pendaftaran, tidak ada biaya listing. Bayar hanya ketika dapat uang! 💰',
+  'escrow':'Sistem escrow kami bekerja begini:\n1. Pembeli bayar → dana ditahan platform\n2. Penyedia mulai mengerjakan\n3. Pembeli terima hasil & acc\n4. Dana langsung cair ke penyedia\n\nAman 100% untuk kedua pihak! ✅',
+  'refund':'Refund tersedia jika:\n• Penyedia tidak memenuhi deadline\n• Hasil tidak sesuai deskripsi\n• Penyedia tidak responsif 72 jam\n\nProses refund 3-5 hari kerja.',
+  'hubungi admin':'Untuk bantuan langsung, kamu bisa:\n📱 WhatsApp: wa.me/6282395139998\n📸 Instagram: @aditya.djody\n\nTim kami siap membantu Senin–Sabtu pukul 08.00–21.00 WIB!',
+  'default':'Maaf, saya belum punya jawaban spesifik untuk itu. Untuk pertanyaan lebih lanjut, kamu bisa:\n\n📱 <a href="https://wa.me/6282395139998" target="_blank">WhatsApp kami di 082395139998</a>\n📸 <a href="https://instagram.com/aditya.djody" target="_blank">DM Instagram @aditya.djody</a>\n\nTim kami siap membantu!'
+};
+
+function getBotReply(msg){
+  const m=msg.toLowerCase();
+  if(m.includes('daftar')||m.includes('register')||m.includes('sign up'))return botKB['cara daftar'];
+  if(m.includes('bayar')||m.includes('pembayaran')||m.includes('dana')||m.includes('transfer')||m.includes('gopay')||m.includes('ovo'))return botKB['pembayaran'];
+  if(m.includes('komisi')||m.includes('biaya')||m.includes('fee')||m.includes('potongan'))return botKB['komisi'];
+  if(m.includes('escrow')||m.includes('aman')||m.includes('keamanan'))return botKB['escrow'];
+  if(m.includes('refund')||m.includes('uang kembali')||m.includes('cancel')||m.includes('batal'))return botKB['refund'];
+  if(m.includes('admin')||m.includes('hubungi')||m.includes('kontak')||m.includes('cs')||m.includes('bantuan')||m.includes('help'))return botKB['hubungi admin'];
+  if(m.includes('halo')||m.includes('hai')||m.includes('hi')||m.includes('hello'))return'Halo juga! 👋 Saya Nova, asisten FinovaKarya. Ada yang bisa saya bantu hari ini?';
+  if(m.includes('terima kasih')||m.includes('makasih')||m.includes('thanks'))return'Sama-sama! 😊 Kalau ada pertanyaan lagi, jangan ragu ya. Semangat berkarya! 🚀';
+  return botKB['default'];
+}
+
+function toggleChat(){
+  chatOpen=!chatOpen;
+  const w=document.getElementById('chatWindow');
+  const icon=document.getElementById('chatFabIcon');
+  w.classList.toggle('open',chatOpen);
+  icon.textContent=chatOpen?'✕':'💬';
+}
+
+function addMsg(text,type){
+  const msgs=document.getElementById('chatMsgs');
+  const d=document.createElement('div');
+  d.className='msg '+type;
+  const now=new Date();
+  const time=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
+  d.innerHTML=text+'<span class="msg-time">'+time+'</span>';
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addTyping(){
+  const msgs=document.getElementById('chatMsgs');
+  const d=document.createElement('div');
+  d.className='msg bot';d.id='typing';
+  d.innerHTML='<span style="opacity:0.6;">Nova sedang mengetik</span> <span style="animation:pulse 1s infinite;">...</span>';
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function removeTyping(){document.getElementById('typing')?.remove();}
+
+function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const q=inp.value.trim();if(!q)return;
+  addMsg(q,'user');
+  inp.value='';
+  document.getElementById('quickBtns').style.display='none';
+  addTyping();
+  setTimeout(()=>{
+    removeTyping();
+    addMsg(getBotReply(q),'bot');
+  },900+Math.random()*600);
+}
+
+function sendQuick(q){
+  document.getElementById('chatInput').value=q;
+  sendChat();
+}
+
+// ===== SCROLL NAV =====
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('mainNav');
+  nav.style.background=window.scrollY>60?'rgba(7,9,15,0.95)':'rgba(7,9,15,0.75)';
+});
+/* ===== FITUR TAMBAHAN: DATA, LOGIN, MARKETPLACE, ADMIN ===== */
+const $=s=>document.querySelector(s);
+const LS={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const fmt=n=>'Rp'+Number(n).toLocaleString('id-ID');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ini=s=>esc(s.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase());
+const ST=['Menunggu Pembayaran','Dibayar (Escrow)','Dikerjakan','Selesai','Dibatalkan'];
+const ADMIN_HASH='e5cb149a67533d48c118aff1666015c0bb532e30d635af5855473b7c89e48f3b';
+async function sha(s){if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}let h=5381;for(const c of s)h=(h*33)^c.charCodeAt(0);return'f'+(h>>>0)}
+const CATS=[...document.querySelectorAll('.cat-name')].map(e=>e.textContent);
+const CATI={};document.querySelectorAll('.cat-card').forEach(c=>CATI[c.querySelector('.cat-name').textContent]=c.querySelector('.cat-icon').textContent);
+const SEED=[
+{id:1,cat:'Desain Grafis',icon:'🎨',bg:'#1a1a3e,#2d1b69',col:'#6C63FF',seller:'Arinda R.',uni:'DKV · ITB',title:'Desain logo profesional + panduan brand, revisi tidak terbatas',price:150000,unit:'',rating:4.9,rev:87,badge:'Terlaris',desc:'3 konsep awal, file AI/PNG/SVG, serta panduan warna dan tipografi.'},
+{id:2,cat:'Web & App Dev',icon:'💻',bg:'#0d2818,#0a3d1f',col:'#00D4AA',seller:'Bagas F.',uni:'Teknik Informatika · UI',title:'Buat landing page responsive untuk bisnis/portfolio kamu',price:300000,unit:'',rating:5,rev:42,badge:'',desc:'Landing page cepat, responsif, siap online. Termasuk 2x revisi.'},
+{id:3,cat:'Penulisan',icon:'📝',bg:'#2d1600,#4a2000',col:'#FFB547',seller:'Citra N.',uni:'Sastra Inggris · UNPAD',title:'Terjemahan dokumen Indonesia–Inggris, cepat dan akurat',price:50000,unit:'/500 kata',rating:4.8,rev:120,badge:'Cepat',desc:'Terjemahan manual (bukan mesin), sudah dicek ulang. Estimasi 1 hari.'},
+{id:4,cat:'Video & Animasi',icon:'🎬',bg:'#200030,#3d0066',col:'#A855F7',seller:'Dani P.',uni:'Ilmu Komunikasi · UGM',title:'Edit video promosi produk/UMKM, siap upload IG & TikTok',price:200000,unit:'',rating:4.9,rev:65,badge:'',desc:'Video 30–60 detik dengan musik, teks, dan transisi sesuai brand.'},
+{id:5,cat:'Olah Data',icon:'📊',bg:'#1a1200,#2e2000',col:'#F59E0B',seller:'Eka W.',uni:'Statistika · IPB',title:'Olah data penelitian SPSS/Python + interpretasi hasil lengkap',price:175000,unit:'',rating:4.7,rev:38,badge:'Pro',desc:'Uji statistik, tabel, grafik, dan penjelasan hasil yang mudah dipahami.'}];
+let DB=LS.get('fk_db',null)||{users:[],listings:SEED,orders:[],feedback:[]};
+let ME=LS.get('fk_me',null),WISH=LS.get('fk_wish',[]),F={q:'',cat:'all',sort:'pop',max:0,fav:false},AT='ov';
+DB.listings=DB.listings.filter(l=>l.cat!=='Les Privat');const save=()=>LS.set('fk_db',DB);
+const isAdmin=()=>{try{return sessionStorage.getItem('fk_admin')==='1'}catch(e){return false}};
+function modal(h,w){$('#mdl').innerHTML='<div class="mbox'+(w?' wide':'')+'"><button class="mx" onclick="closeM()" aria-label="Tutup">✕</button>'+h+'</div>';$('#mdl').classList.add('on')}
+function closeM(){$('#mdl').classList.remove('on')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+
+/* --- NAV --- */
+function renderNav(){
+  $('#navUser').innerHTML=(isAdmin()?'<button class="nbtn" onclick="adminOpen()">🛡 Admin</button>':'')+
+  (ME?'<button class="nbtn" onclick="menu()">👤 '+esc(ME.name.split(' ')[0])+'</button>':'<button class="nbtn" onclick="openAuth(\'login\')">Masuk</button><a href="#" class="nav-btn" onclick="openAuth(\'register\');return false">Daftar Gratis</a>');
+}
+function menu(){modal('<h3>'+esc(ME.name)+'</h3><p>'+esc(ME.email)+' · '+esc(ME.uni||'-')+'</p><button class="btn-submit" onclick="myOrders()">🧾 Pesanan saya</button><button class="btn-alt" onclick="sellForm()">➕ Jual jasa</button><button class="btn-alt" onclick="closeM();F.fav=true;renderL();$(\'#listings\').scrollIntoView({behavior:\'smooth\'})">♥ Jasa favorit</button><button class="btn-alt" onclick="logout()">Keluar</button>')}
+
+/* --- LOGIN / DAFTAR --- */
+function openAuth(t){const L=t==='login',o=L?'register':'login';
+  modal('<h3>'+(L?'Masuk ke FinovaKarya':'Buat akun gratis')+'</h3><div id="aerr" class="err"></div>'+(L?'':'<input id="an" class="form-input" placeholder="Nama lengkap"><input id="au" class="form-input" placeholder="Kampus">')+
+  '<input id="ae" type="email" class="form-input" placeholder="Email"><input id="ap" type="password" class="form-input" placeholder="Kata sandi (min. 6 karakter)" onkeydown="if(event.key===\'Enter\')doAuth(\''+t+'\')">'+
+  '<button class="btn-submit" onclick="doAuth(\''+t+'\')">'+(L?'Masuk':'Daftar')+'</button><button class="btn-alt" onclick="demo()">Coba dengan akun demo</button>'+
+  '<p>'+(L?'Belum punya akun? ':'Sudah punya akun? ')+'<a href="#" style="color:var(--teal)" onclick="openAuth(\''+o+'\');return false">'+(L?'Daftar':'Masuk')+'</a></p>')}
+async function doAuth(t){const v=id=>($('#'+id)?.value||'').trim(),err=m=>{$('#aerr').textContent=m;$('.mbox').classList.remove('shake');void $('.mbox').offsetWidth;$('.mbox').classList.add('shake')};
+  const email=v('ae').toLowerCase(),pw=$('#ap').value;
+  if(!/^\S+@\S+\.\S+$/.test(email))return err('Format email belum benar.');
+  if(pw.length<6)return err('Kata sandi minimal 6 karakter.');
+  const h=await sha(pw),u=DB.users.find(x=>x.email===email);
+  if(t==='register'){if(!v('an'))return err('Nama wajib diisi.');if(u)return err('Email sudah terdaftar. Silakan masuk.');
+    DB.users.push({name:v('an'),uni:v('au'),email,hash:h,banned:false,joined:new Date().toISOString()});save();}
+  else{if(!u||u.hash!==h)return err('Email atau kata sandi salah.');if(u.banned)return err('Akun diblokir. Hubungi admin via WhatsApp.');}
+  const x=DB.users.find(x=>x.email===email);setMe(x);toast2('✅ Selamat datang, '+x.name.split(' ')[0]+'!')}
+async function demo(){const e='demo@finovakarya.id';let u=DB.users.find(x=>x.email===e);if(!u){u={name:'Mahasiswa Demo',uni:'Kampus Demo',email:e,hash:await sha('demo123'),banned:false,joined:new Date().toISOString()};DB.users.push(u);save()}setMe(u);toast2('Masuk sebagai akun demo')}
+function setMe(u){ME={name:u.name,email:u.email,uni:u.uni};LS.set('fk_me',ME);closeM();renderNav()}
+function logout(){ME=null;LS.set('fk_me',null);closeM();renderNav();toast2('Kamu sudah keluar')}
+const toast2=m=>showToast(m);
+
+/* --- LISTING, FILTER, FAVORIT --- */
+function card(l){const k=WISH.includes(l.id);return '<div class="listing-card" style="cursor:pointer" onclick="showL('+l.id+')"><div class="listing-thumb" style="background:linear-gradient(135deg,'+l.bg+')">'+l.icon+(l.badge?'<div class="listing-thumb-label">'+esc(l.badge)+'</div>':'')+'<button class="heart'+(k?' on':'')+'" aria-label="Favorit" onclick="event.stopPropagation();wish('+l.id+')">'+(k?'♥':'♡')+'</button></div><div class="listing-body"><div class="listing-seller"><div class="seller-av" style="background:'+l.col+'">'+ini(l.seller)+'</div><div><span class="seller-name">'+esc(l.seller)+(l.owner?'':' <span class="vf" title="Terverifikasi">✔</span>')+'</span><span class="seller-univ">'+esc(l.uni)+'</span></div></div><div class="listing-title">'+esc(l.title)+'</div><div class="listing-footer"><span class="listing-price">'+fmt(l.price)+'<span style="font-size:.72rem;font-weight:400;color:var(--text3)">'+esc(l.unit)+'</span></span><span class="listing-rating"><span class="star">★</span> '+Number(l.rating).toFixed(1)+' ('+l.rev+')</span></div></div></div>'}
+function renderL(){const a=DB.listings.filter(l=>(F.cat==='all'||l.cat===F.cat)&&(!F.q||(l.title+l.seller+l.cat+l.uni).toLowerCase().includes(F.q))&&(!F.max||l.price<=F.max)&&(!F.fav||WISH.includes(l.id)));
+  a.sort({pop:(x,y)=>y.rev-x.rev,lo:(x,y)=>x.price-y.price,hi:(x,y)=>y.price-x.price,rate:(x,y)=>y.rating-x.rating}[F.sort]);
+  $('#lg').innerHTML=a.length?a.map(card).join(''):'<div class="empty">'+(F.fav?'Belum ada favorit. Tekan ♡ pada jasa yang kamu suka.':'Tidak ada jasa yang cocok. Coba ubah kata kunci atau filter.')+'</div>';
+  $('#lcount').textContent=a.length+' jasa';$('#favb').textContent=F.fav?'♥ Favorit (aktif)':'♡ Favorit'}
+function wish(id){WISH=WISH.includes(id)?WISH.filter(x=>x!==id):[...WISH,id];LS.set('fk_wish',WISH);renderL()}
+function resetF(){F={q:'',cat:'all',sort:'pop',max:0,fav:false};$('#fq').value='';$('#fc').value='all';renderL()}
+function showL(id){const l=DB.listings.find(x=>x.id===id);if(!l)return;
+  modal('<div class="dthumb" style="background:linear-gradient(135deg,'+l.bg+')">'+l.icon+'</div><span class="chip">'+esc(l.cat)+'</span><h3>'+esc(l.title)+'</h3><p>'+esc(l.desc||'')+'</p><p>Oleh <b>'+esc(l.seller)+'</b> · '+esc(l.uni)+' · ★ '+Number(l.rating).toFixed(1)+' ('+l.rev+' ulasan)</p><div class="listing-price" style="font-size:1.3rem">'+fmt(l.price)+esc(l.unit)+'</div><button class="btn-submit" onclick="buy('+id+')">Pesan sekarang</button><button class="btn-alt" onclick="wish('+id+');showL('+id+')">'+(WISH.includes(id)?'♥ Hapus dari favorit':'♡ Simpan ke favorit')+'</button>')}
+
+/* --- PESANAN (ESCROW) --- */
+function buy(id){if(!ME){openAuth('login');return toast2('Masuk dulu untuk memesan')}const l=DB.listings.find(x=>x.id===id);
+  modal('<h3>Checkout</h3><p>'+esc(l.title)+'</p><div class="sum">Harga: <b>'+fmt(l.price)+'</b><br>Dana ditahan escrow sampai kamu mengonfirmasi hasil.</div><div class="pm">'+['DANA','Transfer Bank','GoPay & OVO'].map((m,i)=>'<label><input type="radio" name="pm" value="'+m+'" '+(i?'':'checked')+'> '+m+'</label>').join('')+'</div><textarea id="onote" class="form-textarea" placeholder="Catatan untuk penyedia (opsional)"></textarea><button class="btn-submit" onclick="placeOrder('+id+')">Buat pesanan</button>')}
+function placeOrder(id){const l=DB.listings.find(x=>x.id===id),m=document.querySelector('input[name=pm]:checked').value;
+  const o={id:'FK'+Date.now().toString(36).toUpperCase(),lid:id,title:l.title,buyer:ME.email,price:l.price,method:m,note:($('#onote').value||'').trim(),status:ST[0],date:new Date().toISOString()};DB.orders.unshift(o);save();
+  modal('<h3>Pesanan '+o.id+' dibuat ✅</h3><div class="sum">Transfer <b>'+fmt(o.price)+'</b> via '+esc(m)+(m==='DANA'?' ke <b>082395139998</b>':'')+', lalu kirim bukti ke <a href="https://wa.me/6282395139998?text='+encodeURIComponent('Bukti bayar pesanan '+o.id)+'" target="_blank" style="color:var(--teal)">WhatsApp admin</a>. Admin akan mengubah status menjadi "Dibayar (Escrow)".</div><button class="btn-submit" onclick="myOrders()">Lihat pesanan saya</button>')}
+function myOrders(){const a=DB.orders.filter(o=>o.buyer===ME.email);
+  modal('<h3>Pesanan saya</h3>'+(a.map(o=>'<div class="row"><b>'+esc(o.title)+'</b><span>'+o.id+' · '+fmt(o.price)+' · '+esc(o.method)+'</span><span><span class="chip'+(o.status==='Selesai'?' ok':o.status==='Dibatalkan'?' bad':'')+'">'+o.status+'</span></span>'+(o.status===ST[2]?'<button class="mini" onclick="oSet(\''+o.id+'\',\'Selesai\',1)">Konfirmasi selesai</button>':'')+(o.status===ST[0]?'<button class="mini" onclick="oSet(\''+o.id+'\',\'Dibatalkan\',1)">Batalkan</button>':'')+'</div>').join('')||'<p>Belum ada pesanan. Pilih jasa dan tekan "Pesan sekarang".</p>'),1)}
+function oSet(id,s,mine){const o=DB.orders.find(x=>x.id===id);if(o){o.status=s;save();if(mine)myOrders();else renderA()}}
+
+/* --- JUAL JASA --- */
+function sellForm(){if(!ME){openAuth('login');return toast2('Masuk dulu untuk menjual jasa')}
+  modal('<h3>Jual jasa</h3><div id="aerr" class="err"></div><input id="st" class="form-input" placeholder="Judul jasa"><select id="sc" class="form-select">'+CATS.map(c=>'<option>'+c+'</option>').join('')+'</select><input id="sp" type="number" min="10000" class="form-input" placeholder="Harga (Rp, min. 10.000)"><textarea id="sd" class="form-textarea" placeholder="Deskripsi singkat"></textarea><button class="btn-submit" onclick="sellSave()">Terbitkan</button>')}
+function sellSave(){const t=$('#st').value.trim(),p=+$('#sp').value;if(t.length<8||p<10000){$('#aerr').textContent='Judul min. 8 karakter dan harga min. Rp10.000.';return}
+  const c=$('#sc').value;DB.listings.unshift({id:Date.now(),cat:c,icon:CATI[c]||'✨',bg:'#161E2E,#2d1b69',col:'#6C63FF',seller:ME.name,uni:ME.uni||'Mahasiswa',title:t,price:p,unit:'',rating:5,rev:0,badge:'Baru',desc:$('#sd').value.trim(),owner:ME.email});save();closeM();renderL();toast2('✅ Jasa diterbitkan')}
+
+/* --- FEEDBACK TERSIMPAN --- */
+function submitFeedback(fid,sid){const f=$('#'+fid);DB.feedback.unshift({id:Date.now(),type:fid.replace('form-',''),rating:fid==='form-ulasan'?currentRating:0,text:[...f.querySelectorAll('input,select,textarea')].map(x=>x.value.trim()).filter(Boolean).join(' | '),by:ME?ME.email:'tamu',date:new Date().toISOString(),read:false});save();f.style.display='none';$('#'+sid).style.display='block'}
+
+/* --- MODE ADMIN --- */
+let fails=0,lockT=0,buf='';
+function adminGate(){if(isAdmin())return adminOpen();
+  modal('<h3>🛡 Mode Admin</h3><p>Masukkan kata sandi admin.</p><div id="aerr" class="err"></div><input id="apw" type="password" class="form-input" placeholder="Kata sandi" onkeydown="if(event.key===\'Enter\')adminLogin()"><button class="btn-submit" onclick="adminLogin()">Masuk</button>');setTimeout(()=>$('#apw')?.focus(),50)}
+async function adminLogin(){const e=m=>{$('#aerr').textContent=m;$('.mbox').classList.remove('shake');void $('.mbox').offsetWidth;$('.mbox').classList.add('shake')};
+  if(Date.now()<lockT)return e('Terlalu banyak percobaan. Tunggu '+Math.ceil((lockT-Date.now())/1000)+' detik.');
+  if(await sha($('#apw').value)===ADMIN_HASH){fails=0;try{sessionStorage.setItem('fk_admin','1')}catch(x){}closeM();renderNav();adminOpen()}
+  else{if(++fails>=5){lockT=Date.now()+30000;fails=0}e('Kata sandi salah.')}}
+function adminOut(){try{sessionStorage.removeItem('fk_admin')}catch(e){}$('#adm').classList.remove('on');renderNav()}
+function adminOpen(){$('#adm').classList.add('on');renderA()}
+const tbl=(h,r)=>r.length?'<div class="tw"><table><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+r.map(x=>'<tr>'+x.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</table></div>':'<p style="color:var(--text2)">Belum ada data.</p>';
+const D=s=>new Date(s).toLocaleDateString('id-ID');
+function renderA(){if(!isAdmin())return;const tabs=[['ov','📈 Ringkasan'],['us','👥 Pengguna'],['ls','🛍 Jasa'],['or','🧾 Pesanan'],['fb','💬 Masukan'],['st','⚙️ Data']];
+  const done=DB.orders.filter(o=>o.status==='Selesai'),gmv=done.reduce((s,o)=>s+o.price,0);let b='';
+  if(AT==='ov'){const c=ST.map(s=>DB.orders.filter(o=>o.status===s).length),mx=Math.max(1,...c);
+    b='<div class="stats">'+[['Pengguna',DB.users.length],['Jasa aktif',DB.listings.length],['Pesanan',DB.orders.length],['Omzet selesai',fmt(gmv)],['Komisi 10%',fmt(gmv*.1)],['Masukan baru',DB.feedback.filter(f=>!f.read).length]].map(x=>'<div class="stat"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join('')+'</div><h4>Pesanan per status</h4>'+ST.map((s,i)=>'<div class="bar"><span>'+s+'</span><i style="width:'+c[i]/mx*100+'%"></i><em>'+c[i]+'</em></div>').join('')}
+  if(AT==='us')b=tbl(['Nama','Email','Kampus','Daftar','Status',''],DB.users.map((u,i)=>[esc(u.name),esc(u.email),esc(u.uni||'-'),D(u.joined),u.banned?'<span class="chip bad">Diblokir</span>':'<span class="chip ok">Aktif</span>','<button class="mini" onclick="uBan('+i+')">'+(u.banned?'Buka blokir':'Blokir')+'</button><button class="mini" onclick="uDel('+i+')">Hapus</button>']));
+  if(AT==='ls')b=tbl(['Jasa','Penyedia','Harga','Label',''],DB.listings.map(l=>[esc(l.title),esc(l.seller),fmt(l.price),esc(l.badge||'-'),'<button class="mini" onclick="lPick('+l.id+')">'+(l.badge==='Pilihan'?'Lepas label':'Jadikan Pilihan')+'</button><button class="mini" onclick="lDel('+l.id+')">Hapus</button>']));
+  if(AT==='or')b=tbl(['ID','Jasa','Pembeli','Nominal','Status'],DB.orders.map(o=>[o.id,esc(o.title),esc(o.buyer),fmt(o.price),'<select onchange="oSet(\''+o.id+'\',this.value)">'+ST.map(s=>'<option'+(s===o.status?' selected':'')+'>'+s+'</option>').join('')+'</select>']));
+  if(AT==='fb')b=tbl(['Jenis','Dari','Isi','Tanggal',''],DB.feedback.map((f,i)=>[esc(f.type)+(f.rating?' ★'+f.rating:''),esc(f.by),(f.read?'':'🔵 ')+esc(f.text),D(f.date),'<button class="mini" onclick="fRead('+i+')">Tandai dibaca</button><button class="mini" onclick="fDel('+i+')">Hapus</button>']));
+  if(AT==='st')b='<p style="color:var(--text2);margin-bottom:12px">Data disimpan di browser ini (localStorage).</p><button class="mini" onclick="exportD()">⬇ Ekspor JSON</button><button class="mini" onclick="if(confirm(\'Reset semua data ke awal?\')){DB={users:[],listings:SEED,orders:[],feedback:[]};save();renderA();renderL()}">🗑 Reset data</button>';
+  $('#adm').innerHTML='<div class="ahead"><b>🛡 Panel Admin FinovaKarya</b>'+tabs.map(t=>'<button class="mini'+(AT===t[0]?' on':'')+'" onclick="AT=\''+t[0]+'\';renderA()">'+t[1]+'</button>').join('')+'<button class="mini" onclick="$(\'#adm\').classList.remove(\'on\')">Tutup</button><button class="mini" onclick="adminOut()">Keluar admin</button></div><div class="abody">'+b+'</div>'}
+function uBan(i){DB.users[i].banned=!DB.users[i].banned;save();renderA()}
+function uDel(i){if(confirm('Hapus pengguna ini?')){DB.users.splice(i,1);save();renderA()}}
+function lPick(id){const l=DB.listings.find(x=>x.id===id);l.badge=l.badge==='Pilihan'?'':'Pilihan';save();renderA();renderL()}
+function lDel(id){if(confirm('Hapus jasa ini?')){DB.listings=DB.listings.filter(x=>x.id!==id);save();renderA();renderL()}}
+function fRead(i){DB.feedback[i].read=true;save();renderA()}
+function fDel(i){DB.feedback.splice(i,1);save();renderA()}
+function exportD(){const d=JSON.parse(JSON.stringify(DB));d.users.forEach(u=>delete u.hash);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));a.download='finovakarya-data.json';a.click()}
+
+/* pemicu admin: ketik "finovadihati" di halaman, kolom cari, atau chat */
+document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea,select')||e.key.length!==1)return;buf=(buf+e.key.toLowerCase()).slice(-12);if(buf==='finovadihati'){buf='';adminGate()}});
+function doSearch(){const i=$('#searchInput'),q=i.value.trim();if(q.toLowerCase()==='finovadihati'){i.value='';return adminGate()}F.q=q.toLowerCase();$('#fq').value=q;renderL();$('#listings').scrollIntoView({behavior:'smooth'})}
+const _sc=sendChat;sendChat=function(){const i=$('#chatInput');if(i.value.trim().toLowerCase()==='finovadihati'){i.value='';adminGate();return}_sc()};
+
+/* --- INIT --- */
+$('#fc').innerHTML='<option value="all">Semua kategori</option>'+CATS.map(c=>'<option>'+c+'</option>').join('');
+document.querySelectorAll('.cat-card').forEach(c=>c.addEventListener('click',e=>{e.preventDefault();F.cat=c.querySelector('.cat-name').textContent;$('#fc').value=F.cat;renderL();$('#listings').scrollIntoView({behavior:'smooth'})}));
+const TAGC=['Desain Grafis','Web & App Dev','Penulisan','Video & Animasi','Olah Data'];
+document.querySelectorAll('.hero-tags a').forEach((a,i)=>a.addEventListener('click',e=>{e.preventDefault();F.cat=TAGC[i];$('#fc').value=F.cat;renderL();$('#listings').scrollIntoView({behavior:'smooth'})}));
+document.querySelector('.cta-half .btn-primary').addEventListener('click',e=>{e.preventDefault();$('#listings').scrollIntoView({behavior:'smooth'})});
+document.querySelector('.btn-ghost').addEventListener('click',e=>{e.preventDefault();sellForm()});
+document.querySelector('.btn-outline-sm').addEventListener('click',e=>{e.preventDefault();resetF()});
+renderNav();renderL();
+
+
+/* ===== TAMBAHAN PREMIUM ===== */
+function myOrders(){const a=DB.orders.filter(o=>o.buyer===ME.email);
+  modal('<h3>Pesanan saya</h3>'+(a.map(o=>{const i=ST.indexOf(o.status),bad=i===4,b=(t,s,x)=>'<button class="mini" onclick="oSet(\''+o.id+'\',\''+s+'\',1)">'+t+'</button>';
+    return '<div class="row"><b>'+esc(o.title)+'</b><span>'+o.id+' · '+fmt(o.price)+' · '+esc(o.method)+' · '+D(o.date)+'</span>'+(bad?'':'<div class="tl">'+ST.slice(0,4).map((s,k)=>'<i class="'+(k<=i?'on':'')+'" title="'+s+'"></i>').join('')+'</div>')+'<span><span class="chip'+(i===3?' ok':bad?' bad':'')+'">'+o.status+'</span></span>'+(i===2?b('Konfirmasi selesai','Selesai'):'')+(i===0?b('Batalkan','Dibatalkan'):'')+(i===3?(o.rated?'<span>Rating kamu: '+o.rated+'★</span>':'<span>Beri rating: '+[1,2,3,4,5].map(n=>'<button class="mini" onclick="rate(\''+o.id+'\','+n+')">'+n+'★</button>').join('')+'</span>'):'')+'</div>'}).join('')||'<p>Belum ada pesanan. Pilih jasa dan tekan "Pesan sekarang".</p>'),1)}
+function rate(id,n){const o=DB.orders.find(x=>x.id===id),l=DB.listings.find(x=>x.id===o.lid);o.rated=n;if(l){l.rating=(l.rating*l.rev+n)/(l.rev+1);l.rev++}save();renderL();myOrders();showToast('⭐ Terima kasih atas ratingmu!')}
+const _sl=showL;showL=function(id){_sl(id);const l=DB.listings.find(x=>x.id===id);if(!l)return;const m=$('.mbox');if(!m)return;
+  m.insertAdjacentHTML('beforeend','<a class="btn-alt" style="text-align:center;text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/6282395139998?text='+encodeURIComponent('Halo, saya tertarik dengan jasa "'+l.title+'" ('+fmt(l.price)+') di FinovaKarya')+'">💬 Tanya via WhatsApp</a>')};
+const _mn=menu;menu=function(){_mn();$('.mbox').insertAdjacentHTML('beforeend','<button class="btn-alt" onclick="myListings()">🏪 Jasa saya</button>')};
+function myListings(){const a=DB.listings.filter(l=>l.owner===ME.email);
+  modal('<h3>Jasa saya</h3>'+(a.map(l=>{const n=DB.orders.filter(o=>o.lid===l.id),e=n.filter(o=>o.status==='Selesai').reduce((s,o)=>s+o.price*.9,0);return '<div class="row"><b>'+esc(l.title)+'</b><span>'+fmt(l.price)+' · '+n.length+' pesanan · pendapatan bersih '+fmt(e)+'</span><button class="mini" onclick="delMine('+l.id+')">Hapus</button></div>'}).join('')||'<p>Kamu belum menerbitkan jasa.</p>')+'<button class="btn-submit" onclick="sellForm()">➕ Jual jasa baru</button>',1)}
+function delMine(id){if(confirm('Hapus jasa ini?')){DB.listings=DB.listings.filter(x=>x.id!==id);save();renderL();myListings()}}
+(function(){const pg=document.createElement('div');pg.id='prog';const tb=document.createElement('button');tb.id='totop';tb.textContent='↑';tb.setAttribute('aria-label','Ke atas');tb.onclick=()=>scrollTo({top:0,behavior:'smooth'});document.body.append(pg,tb);
+  addEventListener('scroll',()=>{const h=document.documentElement;pg.style.width=h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight)*100+'%';tb.classList.toggle('on',h.scrollTop>600)},{passive:true});
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  document.querySelectorAll('.hero-stat-num').forEach(el=>{const m=el.textContent.match(/^(\d{1,3}(?:\.\d{3})+|\d+(?:\.\d+)?)(.*)$/);if(!m)return;const th=/^\d{1,3}(\.\d{3})+$/.test(m[1]),n=th?+m[1].replace(/\./g,''):+m[1],d=th?0:(m[1].split('.')[1]||'').length,t0=performance.now();
+    (function f(t){const p=Math.min(1,(t-t0)/1600),v=n*(1-Math.pow(1-p,3));el.textContent=(th?Math.round(v).toLocaleString('id-ID'):v.toFixed(d))+m[2];if(p<1)requestAnimationFrame(f)})(t0)})})();
+</script>
+</body>
+</html>
